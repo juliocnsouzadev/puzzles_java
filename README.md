@@ -1,0 +1,2 @@
+# puzzles
+Algorithms problems solving
