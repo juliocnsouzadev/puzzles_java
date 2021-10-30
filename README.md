@@ -3,5 +3,6 @@
 ### Algorithms problems solving
 
 ![sortedSquaredArray.png](./readme_images/sortedSquaredArray.png)
-![img.png](readme_images/validateSubsequence.png)
-![img.png](readme_images/tournamentWinner.png)
+![validateSubsequence.png](readme_images/validateSubsequence.png)
+![tournamentWinner.png](readme_images/tournamentWinner.png)
+![nonConstructableChange.png](readme_images/nonConstructibleChange.png)
