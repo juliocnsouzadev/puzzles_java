@@ -1,4 +1,4 @@
-class TournamentWinner {
+module.exports = class TournamentWinner {
     get(competitions, results) {
         const points = {};
         let leader = null;
@@ -16,4 +16,4 @@ class TournamentWinner {
         }
         return leader;
     }
-}
+};
