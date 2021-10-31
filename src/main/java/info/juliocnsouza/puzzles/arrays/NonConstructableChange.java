@@ -18,7 +18,7 @@ public class NonConstructableChange {
             }
             sum += currentCoin;
         }
-        return -1;
+        return sum + 1;
     }
 
 
