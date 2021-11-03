@@ -11,24 +11,33 @@ public class ThreeNumberSum {
 
         final List<Integer[]> results = new ArrayList<>();
 
-        for (int i = 0; i < array.length - 2; i++) {
-            final List<Integer> values = Arrays.asList(0, 0, 0);
-            values.set(0, array[i]);
-            for (int j = 0; j < array.length - 1; j++) {
-                if (j == i) {
-                    continue;
-                }
-                values.set(1, array[j]);
-                values.set(2, array[j + 1]);
+        int position = 0;
+        int left = position + 1;
+        int right = array.length - 1;
 
-                final Integer sum = values.stream().reduce(0, (a, b) -> a + b);
-                if (sum == targetSum) {
-                    results.add((Integer[]) values.toArray());
-                }
+        while (position < array.length - 2) {
+
+            final int current = array[position];
+            final int lValue = array[left];
+            final int rValue = array[right];
+            final int sum = current + lValue + rValue;
+
+            if (sum == targetSum) {
+                results.add(new Integer[]{current, lValue, rValue});
+                right--;
+                left++;
+            } else if (sum > targetSum) {
+                right--;
+            } else {
+                left++;
             }
 
+            if (left >= right) {
+                position++;
+                left = position + 1;
+                right = array.length - 1;
+            }
         }
-
         return results;
     }
 }
