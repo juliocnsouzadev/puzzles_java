@@ -2,7 +2,7 @@ package info.juliocnsouza.puzzles.arrays;
 
 import java.util.Arrays;
 
-// time: O(N log(n) + M log(M))
+// time: O(nLog(n) + mLog(m))
 // space: O(1)
 public class SmallestDifference {
 

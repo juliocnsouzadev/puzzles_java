@@ -153,3 +153,17 @@ SELECT COMPANY.COMPANY_CODE, COMPANY.FOUNDER,
 FROM COMPANY
 GROUP BY COMPANY.COMPANY_CODE, COMPANY.FOUNDER
 ORDER BY COMPANY.COMPANY_CODE;
+
+/*
+Query the difference between the maximum and minimum populations in CITY.
+Input Format
+The CITY table is described as follows:
+CITY
+Field           Type
+ID              NUMBER
+NAME            VARCHAR2 ( 17 )
+COUNTRYCODE     VARCHAR2 ( 3 )
+DISTRICT        VARCHAR2 ( 20 )
+POPULATION      NUMBER
+*/
+select max(population) - min(population) as difference from CITY
