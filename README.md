@@ -6,3 +6,4 @@
 ![validateSubsequence.png](readme_images/validateSubsequence.png)
 ![tournamentWinner.png](readme_images/tournamentWinner.png)
 ![nonConstructableChange.png](readme_images/nonConstructibleChange.png)
+![smallestDiff.png](readme_images/smallestDiff.png)
