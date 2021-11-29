@@ -7,18 +7,20 @@ public class BranchSums {
 
     public List<Integer> branchSums(BinaryTree root) {
       final List<Integer> sums = new ArrayList<>();
-
-        boolean isLeaf = false;
-        BinaryTree current = root;
-        int sum = 0;
-        while(!isLeaf){
-            sum += current.value;
-            isLeaf = current.isLeaf();
-            current = current.left;
-        }
-        System.out.println(sum);
-
+        sum(root, 0, sums);
         return sums;
+    }
+
+    private void sum(BinaryTree node, int sum, List<Integer> sums){
+        if (node == null){
+            return;
+        }
+        sum += node.value;
+        if (node.isLeaf()){
+            sums.add(sum);
+        }
+        sum(node.left, sum, sums);
+        sum(node.right, sum, sums);
     }
 
 }
