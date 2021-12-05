@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// O(n) space | O(h) space
 public class NodeDepths {
 
     public int nodeDepths(BinaryTree root) {
