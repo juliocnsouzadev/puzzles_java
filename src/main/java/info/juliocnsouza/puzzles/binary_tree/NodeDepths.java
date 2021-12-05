@@ -1,20 +1,26 @@
 package info.juliocnsouza.puzzles.binary_tree;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class NodeDepths {
 
     public int nodeDepths(BinaryTree root) {
-        List<Integer> depths = new ArrayList<>();
-        calcDepth(0,depths,  root);
-        return depths.stream().reduce(Integer::sum).get();
+        Map<String, Integer> accumulator = new HashMap<>();
+        accumulator.put("",0);
+        calcDepth(0,accumulator,  root);
+        return accumulator.get("");
     }
 
-    private int calcDepth(int depth, List<Integer> depths, BinaryTree node){
-        int leftSum = node.left == null ? depth : calcDepth(depth + 1, depths, node.left);
-        int rightSum = node.right == null? depth : calcDepth(depth + 1, depths,  node.right);
-        depths.add(depth);
-        return depth;
+    private void calcDepth(int depth, Map<String, Integer> accumulator, BinaryTree node){
+        if(node == null){
+            return ;
+        }
+        calcDepth(depth + 1, accumulator, node.left);
+        calcDepth(depth + 1, accumulator,  node.right);
+        accumulator.put("", accumulator.get("") + depth);
     }
+
 }
