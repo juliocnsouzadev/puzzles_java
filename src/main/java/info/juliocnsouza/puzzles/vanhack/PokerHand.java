@@ -2,7 +2,6 @@ package info.juliocnsouza.puzzles.vanhack;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class PokerHand
 {
@@ -15,36 +14,12 @@ public class PokerHand
         this.hand = hand;
     }
 
-    private Result compareValues(List<Integer> left, List<Integer> right, boolean sorted ){
-        if (left == null || right == null || left.size() != right.size()){
-            throw new IllegalArgumentException("invalid list of values");
-        }
-
-        if (!sorted){
-            Collections.sort(left, Comparator.reverseOrder());
-            Collections.sort(right, Comparator.reverseOrder());
-        }
-
-        for (int i = 0; i < left.size(); i++) {
-            if (left.get(i) > right.get(i)){
-                return Result.WIN;
-            }
-            if (left.get(i) < right.get(i)){
-                return Result.LOSS;
-            }
-        }
-        return Result.TIE;
-    }
-
     public Result compareWith(PokerHand opponent) {
         final HandData currentPlayerData = resolveHand();
         final HandData opponentHandData = opponent.resolveHand();
 
-        System.out.println("Player " + currentPlayerData.hand + " -> " + currentPlayerData.values);
-        System.out.println("Opponent " + opponentHandData.hand + " -> " + opponentHandData.values);
-
         if (currentPlayerData.hand.priority  == opponentHandData.hand.priority) {
-            return compareValues(currentPlayerData.values, opponentHandData.values, true);
+            return compareValues(currentPlayerData.values, opponentHandData.values, false);
         }
         else{
             return currentPlayerData.hand.priority > opponentHandData.hand.priority ? Result.WIN : Result.LOSS;
@@ -78,7 +53,7 @@ public class PokerHand
                 .filter(entry -> entry.getValue().size() == 4).collect(Collectors.toList());
 
         if (fourOfAKind.size() > 0){
-            return HandData.of(Hand.FOUR_OF_A_KIND, List.of( fourOfAKind.get(0).getValue().get(0).realValue) );
+            return HandData.of(Hand.FOUR_OF_A_KIND, sortedPairs );
         }
 
         //FULL_HOUSE
@@ -93,7 +68,7 @@ public class PokerHand
                 .collect(Collectors.toList());
 
         if (threeOfAKind.size() > 0 && twoOfAKind.size() > 0) {
-            return HandData.of(Hand.FULL_HOUSE,List.of( threeOfAKind.get(0).getValue().get(0).realValue) );
+            return HandData.of(Hand.FULL_HOUSE, sortedPairs );
         }
 
         //FLUSH
@@ -118,27 +93,18 @@ public class PokerHand
 
         //THREE_OF_A_KIND
         if (threeOfAKind.size() > 0 && twoOfAKind.size() == 0) {
-            return HandData.of(Hand.THREE_OF_A_KIND, List.of(threeOfAKind.get(0).getValue().get(0).realValue) );
+            return HandData.of(Hand.THREE_OF_A_KIND, sortedPairs );
         }
 
 
         //TWO_PAIR
         if (twoOfAKind.size() == 2) {
-            final int v1 = twoOfAKind.get(0).getValue().get(0).realValue;
-            final int v2 = twoOfAKind.get(1).getValue().get(0).realValue;
-            return HandData.of(Hand.TWO_PAIR, List.of((v1 < v2 ? v1 : v2), (v1 > v2 ? v1 : v2)));
+            return HandData.of(Hand.TWO_PAIR, sortedPairs);
         }
 
         //ONE_PAIR
         if (twoOfAKind.size() == 1) {
-            final List<Integer> nonTwoOfKindValues = pairsGroupedByValue
-                    .entrySet().stream()
-                    .filter(entry -> entry.getValue().size() != 2)
-                    .flatMap(entry -> entry.getValue().stream())
-                    .map(pair -> pair.realValue)
-                    .collect(Collectors.toList());
-
-            return HandData.of(Hand.ONE_PAIR, nonTwoOfKindValues);
+            return HandData.of(Hand.ONE_PAIR, sortedPairs);
         }
 
         return HandData.of(Hand.HIGH_CARD, sortedPairs);
@@ -158,6 +124,27 @@ public class PokerHand
             prev = current;
         }
         return true;
+    }
+
+    private Result compareValues(List<Integer> left, List<Integer> right, boolean sorted ){
+        if (left == null || right == null || left.size() != right.size()){
+            throw new IllegalArgumentException("invalid list of values");
+        }
+
+        if (!sorted){
+            left = left.stream().sorted(Comparator.reverseOrder()).collect(Collectors.toList());
+            right = right.stream().sorted(Comparator.reverseOrder()).collect(Collectors.toList());
+        }
+
+        for (int i = 0; i < left.size(); i++) {
+            if (left.get(i) > right.get(i)){
+                return Result.WIN;
+            }
+            if (left.get(i) < right.get(i)){
+                return Result.LOSS;
+            }
+        }
+        return Result.TIE;
     }
 
     private static class HandData {
