@@ -1,6 +1,6 @@
 const sorted_squared = require("./sorted_squared.js");
-const salesByMatch = require("./_before/salesByMatch.js");
-const NonConstructableChange = require("./non_constructable_change.js");
+const salesByMatch = require("./_deprecated/salesByMatch.js");
+const NonConstructableChange = require("./algorithm/non_constructable_change.js");
 const SmallestDifference = require("./smallest_difference.js");
 
 const test = (what) => {
