@@ -19,7 +19,7 @@ public class BinaryTree {
         return this;
     }
 
-    private BinaryTree(int value) {
+    protected BinaryTree(int value) {
         this.value = value;
         this.left = null;
         this.right = null;
