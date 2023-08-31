@@ -49,7 +49,8 @@ class LongestPeakTest {
     void testLongestPerformanceComparison() {
 
         var start = Calendar.getInstance();
-        for (int i = 0; i < 1000000; i++) {
+        final int loops = 10000000;
+        for (int i = 0; i < loops; i++) {
             testCases.forEach(testCase -> LongestPeak.longestPeak(testCase.input));
         }
         var end = Calendar.getInstance();
@@ -57,7 +58,7 @@ class LongestPeakTest {
         var aTime = end.getTimeInMillis() - start.getTimeInMillis();
 
         start = Calendar.getInstance();
-        for (int i = 0; i < 100000; i++) {
+        for (int i = 0; i < loops; i++) {
             testCases.forEach(testCase -> LongestPeak.longestPeakWhile(testCase.input));
         }
         end = Calendar.getInstance();
